@@ -1,7 +1,10 @@
 import json
-from pprint import pprint
 
-with open('data.json') as data_file:
-    data = json.load(data_file)
+# Open the data and read each JSON object into a list
+data_file = open('sample_data.json', 'r')
+tweets = data_file.readlines()
 
-pprint(data)
+# Load each JSON object and print the tweetId
+for line in tweets:
+    values = json.loads(line)
+    print values["tweetId"]
