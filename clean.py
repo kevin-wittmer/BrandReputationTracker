@@ -2,7 +2,7 @@ import csv
 import json
 
 # Open the data and read each JSON object into a list
-data_file = open('collection_brands.12.json', 'r')
+data_file = open('sample_data.json', 'r')
 tweets = data_file.readlines()
 data_file.close()
 
@@ -17,3 +17,5 @@ with open('clean.csv', 'wb') as csvfile:
         #if values['tweetOwner']['language'] == 'en':
         writer.writerow([values['tweetId'],
             values['text'].encode('ascii', 'ignore')])
+
+csvfile.close()
