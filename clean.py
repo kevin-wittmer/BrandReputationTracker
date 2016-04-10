@@ -13,20 +13,21 @@ tweets = data_file.readlines()
 data_file.close()
 
 # Parse the name of the csv file
-csv_filename = sys.argv[1]
-csv_filename = csv_filename[0:10] + csv_filename[18:20] + '.csv'
+csv_filename = 'collection' + sys.argv[1].split('.')[2] + '.csv'
+csv_path = '.\clean_data\\' + csv_filename
 
 # Open csv file to write data to
-with open(csv_filename, 'wb') as csvfile:
+with open(csv_path, 'wb') as csvfile:
     writer = csv.writer(csvfile)
     writer.writerow(['tweetId', 'text'])    # header
 
-    # For each English tweets, write each ID and text to csv file
+    # For each English tweet, write its ID and text to csv file
     for line in tweets:
         values = json.loads(line)
         if values['tweetOwner']['language'] == 'en':
-            writer.writerow([values['tweetId'],
-                values['text'].encode('ascii', 'ignore')])
+            tweetId = str(values['tweetId'])
+            text = values['text'].encode('ascii', 'ignore').replace('\n', ' ')
+            writer.writerow([tweetId, text])
 
 # Print location of cleaned data and close csv file
 print 'Data written to:', csvfile.name
