@@ -14,7 +14,7 @@ data_file.close()
 
 # Parse the name of the csv file
 csv_filename = 'collection' + sys.argv[1].split('.')[2] + '.csv'
-csv_path = '.\clean_data\\' + csv_filename
+csv_path = './clean_data/' + csv_filename
 
 # Open csv file to write data to
 with open(csv_path, 'wb') as csvfile:
