@@ -1,9 +1,17 @@
 import csv
+from nltk import stem
 
-# Split each tweet into a list of words
+# Create a global stemmer object
+# stemmer = stem.snowball.EnglishStemmer()
+stemmer = stem.PorterStemmer()
+
+# Splits each tweet into a list of stemmed words
 def stemmify(tweet_string):
 	word_list = tweet_string.split()
-	return word_list
+	stemmed_list = []
+	for tag in word_list:
+		stemmed_list.append(stemmer.stem(tag))
+	return stemmed_list
 
 # Open csv file containing tweets
 csvfile = open('clean_data/collection3.csv')
