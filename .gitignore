@@ -1,7 +1,11 @@
-# data files
-
+# Ignore all files containing data
 .csv
 .json
+.xls
+.xlsx
+
+# Ignore any auxiliary text files
+.txt
 
 
 
