@@ -6,41 +6,44 @@ import sys
 
 # Cleans the tweet text by removing special characters, RT, punctuation, and extra whitespace
 def clean(tweet_text):
-	tweet_text = tweet_text.encode('ascii', 'ignore').replace('\n', ' ')
+	tweet_text = tweet_text.encode("ascii", "ignore").replace("\n", " ")
 	tweet_text = re.sub(r"(?:\@|https?\://)\S+", "", tweet_text)
-	tweet_text = tweet_text.replace('http', '').replace('RT', '')
+	tweet_text = tweet_text.replace("http", "").replace("RT", "")
 	tweet_text = tweet_text.translate(string.maketrans("",""), string.punctuation)
-	tweet_text = ' '.join(tweet_text.split())
+	tweet_text = " ".join(tweet_text.split())
 	return tweet_text
 
-# Check for proper command line arguments
-if len(sys.argv) != 2:
-    print 'Usage: clean.py <filename.json>'
-    sys.exit(2)
 
-# Open the data and read each JSON object into a list
-data_file = open(sys.argv[1], 'r')
-tweets = data_file.readlines()
-data_file.close()
+def main():
+	# Check for proper command line arguments
+	if len(sys.argv) != 3:
+		print "Usage: clean.py <input_file.json> <output_file.csv>"
+		return
 
-# Parse the name of the csv file
-csv_filename = 'collection' + sys.argv[1].split('.')[2] + '.csv'
-csv_path = '.\clean_data\\' + csv_filename
+	# Open the data and read each line as a string into a list
+	input_filename = "../filtered_data/" + sys.argv[1]
+	with open(input_filename, "r") as input_file:
+		lines = input_file.readlines()
 
-# Open csv file to write data to
-with open(csv_path, 'wb') as csvfile:
-    writer = csv.writer(csvfile)
-    writer.writerow(['tweetId', 'text'])    # header
+	# Parse the name of the csv file
+	output_filename = "../cleaned_data/" + sys.argv[2]
 
-    # For each English tweet, write its ID and text to csv file
-    for line in tweets:
-        values = json.loads(line)
-        if values['tweetOwner']['language'] == 'en':
-            tweetId = values['tweetId']
-            text = clean(values['text'])
-            if text != '':
-            	writer.writerow([tweetId, text])
+	# Open csv file to write data to
+	with open(output_filename, "w") as output_file:
+		writer = csv.writer(output_file)
+		writer.writerow(["tweetId", "text"])    # header
 
-# Print location of cleaned data and close csv file
-print 'Data written to:', csvfile.name
-csvfile.close()
+		# For each tweet, write its ID and text to csv file
+		for line in lines:
+			tweet = json.loads(line)
+			tweetId = tweet["tweetId"]
+			text = clean(tweet["text"])
+			if text != "":
+				writer.writerow([tweetId, text])
+
+	# Print location of cleaned data
+	print "Data written to:", output_file.name
+
+
+if __name__ == "__main__":
+	main()
