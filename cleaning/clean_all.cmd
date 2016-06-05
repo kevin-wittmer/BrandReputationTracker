@@ -1,1 +1,1 @@
-for /l %%x in (0, 1, 30) do python ./clean.py filtered_tweets.%%x.json cleaned_tweets.%%x.json
+for /l %%x in (0, 1, 30) do python ./clean.py filtered_tweets.%%x.json cleaned_tweets.%%x.csv
