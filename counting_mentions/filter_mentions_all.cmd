@@ -1,0 +1,1 @@
+for /l %%x in (0, 1, 30) do python ./filter_mentions.py collection_brands.%%x.json filtered_by_mentions.%%x.json
