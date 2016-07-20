@@ -1,3 +1,7 @@
+# Folders
+OneWeekData/
+old_stuff/
+
 # Ignore all files containing data
 *.csv
 *.json

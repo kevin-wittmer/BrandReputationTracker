@@ -1,1 +1,1 @@
-for /l %%x in (0, 1, 30) do python ./filter.py collection_brands.%%x.json filtered_tweets.%%x.json
+for /l %%x in (0, 1, 30) do python ./filter_strict.py ../raw_data/collection_brands.%%x.json ../filtered_data/filtered_tweets.%%x.json
